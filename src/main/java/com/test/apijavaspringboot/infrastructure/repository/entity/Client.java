@@ -1,59 +1,28 @@
-package com.test.apijavaspringboot.infrastructure.repository.entity;
-
-import jakarta.persistence.*;
-
-import java.time.LocalDate;
-
-public class Client {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String name;
-    private String cpf;
-    private LocalDate birthDate;
-    private String Cep;
-
-    public Client(Integer id, String name, String cpf, LocalDate birthDate, String cep) {
-        this.id = id;
-        this.name = name;
-        this.cpf = cpf;
-        this.birthDate = birthDate;
-        Cep = cep;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getCep() {
-        return Cep;
-    }
-
-    public void setCep(String cep) {
-        Cep = cep;
-    }
-}
+//package com.test.apijavaspringboot.infrastructure.repository.entity;
+//
+//import com.fasterxml.jackson.annotation.JsonFormat;
+//import jakarta.persistence.*;
+//import jakarta.validation.constraints.NotBlank;
+//import jakarta.validation.constraints.PastOrPresent;
+//import jakarta.validation.constraints.Size;
+//import org.hibernate.validator.constraints.br.CPF;
+//
+//import java.time.LocalDate;
+//
+//@Entity
+//public class Client {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Integer id;
+//    @NotBlank(message = "name: Não pode ser vazio ou nulo")
+//    private String name;
+//    @CPF(message = "cpf: Deve conter apenas os digitos")
+//    @Size(min = 11, max = 11, message = "cpf: Quantidade de digitos deve ser 11")
+//    private String cpf;
+//    @PastOrPresent(message = "birthDate: Não pode ser uma data no futuro")
+//    @JsonFormat(pattern = "YYYY-MM-DD")
+//    private LocalDate birthDate;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(referencedColumnName = "id")
+//    private Address address;
+//}
