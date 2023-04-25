@@ -1,4 +1,4 @@
-package com.test.apijavaspringboot.presentation.handler;
+package com.test.apijavaspringboot.presentation.handler.Execpetion;
 
 public class ClientNotFoundException extends Exception{
 

@@ -6,6 +6,7 @@ import com.test.apijavaspringboot.infrastructure.apiclients.ViaCepApiClient;
 import com.test.apijavaspringboot.infrastructure.apiclients.dto.ClientDto;
 import com.test.apijavaspringboot.infrastructure.repository.ClientsRepository;
 import com.test.apijavaspringboot.presentation.dto.CreateClientDto;
+import com.test.apijavaspringboot.presentation.handler.Execpetion.ClientNotCreatedExeception;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,9 @@ public class CreateClients {
     @Autowired
     private ViaCepApiClient viaCepApiClient;
 
-    public Client create(@Valid CreateClientDto clientDTO){
+    public Client create(@Valid CreateClientDto clientDTO) throws ClientNotCreatedExeception {
+        if (repository.countByCpfContains(clientDTO.cpf()) != 0)
+            throw new ClientNotCreatedExeception(String.format("Cpf %s já existente", clientDTO.cpf()));
 
         ClientDto addressDto =  viaCepApiClient.getCep(clientDTO.cep());
 
