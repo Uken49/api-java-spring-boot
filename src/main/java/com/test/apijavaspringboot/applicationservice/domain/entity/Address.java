@@ -3,40 +3,49 @@ package com.test.apijavaspringboot.applicationservice.domain.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Pattern(regexp = "^\\d{5}(-\\d{3})?$", message = "cep: deve estar no formato '12345678' ou '12345-678'")
+    private String cep;
     @NotBlank(message = "houseNumber: Não pode ser vazio ou nulo")
-    @NotNull
     private String houseNumber;
     private String complement;
     @NotBlank(message = "street: Não pode ser vazio ou nulo")
-    @NotNull
     private String street;
     @NotBlank(message = "neighborhood: Não pode ser vazio ou nulo")
-    @NotNull
     private String neighborhood;
     @NotBlank(message = "state: Não pode ser vazio ou nulo")
-    @NotNull
     private String state;
     @OneToOne(mappedBy = "address")
     private Client client;
 
     public Address() {}
 
-    public Address(String complement, String street, String houseNumber, String neighborhood, String state) {
+    public Address(String cep, String houseNumber, String complement, String street, String neighborhood, String state) {
+        this.cep = cep;
+        this.houseNumber = houseNumber;
         this.complement = complement;
         this.street = street;
-        this.houseNumber = houseNumber;
         this.neighborhood = neighborhood;
         this.state = state;
     }
 
     public Integer getId() {
         return id;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 
     public String getComplement() {

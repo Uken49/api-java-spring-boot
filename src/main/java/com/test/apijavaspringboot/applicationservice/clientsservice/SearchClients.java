@@ -20,7 +20,7 @@ public class SearchClients {
 
     public Client searchByCpf(String cpf) throws ClientNotFoundException {
         return repository.findByCpfContains(cpf).orElseThrow(
-                () -> new ClientNotFoundException(String.format("Usuário com cpf '%s' não existe", cpf.replace("{","")))
+                () -> new ClientNotFoundException(String.format("Usuário com cpf '%s' não existe", cpf))
         );
     }
 }

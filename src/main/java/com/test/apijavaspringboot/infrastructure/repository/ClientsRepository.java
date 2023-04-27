@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface ClientsRepository extends JpaRepository<Client, Integer> {
 
-    byte countByCpfContains(String cpf);
+    boolean existsByCpf(String cpf);
 
     Optional<Client> findByCpfContains(String cpf);
 

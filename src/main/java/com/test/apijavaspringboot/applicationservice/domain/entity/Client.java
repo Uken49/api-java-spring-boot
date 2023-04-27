@@ -17,7 +17,7 @@ public class Client {
     @NotBlank(message = "name: Não pode ser vazio ou nulo")
     private String name;
     @CPF(message = "cpf: Deve conter apenas os digitos")
-    @Size(min = 11, max = 11, message = "cpf: Quantidade de digitos deve ser 11")
+//    @Size(min = 11, max = 11, message = "cpf: Quantidade de digitos deve ser 11")
     private String cpf;
     @PastOrPresent(message = "birthDate: Não pode ser uma data no futuro")
     private LocalDate birthDate;

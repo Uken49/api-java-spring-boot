@@ -1,38 +1,48 @@
 package com.test.apijavaspringboot.presentation.handler;
 
-import com.test.apijavaspringboot.presentation.handler.Execpetion.ClientNotCreatedExeception;
 import com.test.apijavaspringboot.presentation.handler.Execpetion.ClientNotFoundException;
+import jakarta.validation.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.net.URI;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class HandlerExecpetionAdvice {
 
-    @ExceptionHandler(ClientNotCreatedExeception.class)
-    public ProblemDetail clientNotCreated(ClientNotCreatedExeception e){
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, e.getMessage());
+    private ProblemDetail builderProblemDetail(
+            String title, HttpStatus status, String detail
+    ){
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(status,detail);
 
+        problemDetail.setTitle(title);
         problemDetail.setType(URI.create(""));
-        problemDetail.setTitle("Usuário não pôde ser criado");
-        problemDetail.setProperty("timestamp" , Instant.now());
+        problemDetail.setProperty("timestamp" , LocalDateTime.now());
 
         return problemDetail;
     }
 
+    @ExceptionHandler({ValidationException.class})
+    public ProblemDetail clientNotCreated(ValidationException ve){
+
+        return builderProblemDetail(
+                "Usuário não pôde ser criado"
+                ,HttpStatus.BAD_REQUEST
+                , ve.getMessage()
+        );
+    }
+
     @ExceptionHandler(ClientNotFoundException.class)
-    public ProblemDetail clientNotFound(ClientNotFoundException e){
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
+    public ProblemDetail clientNotFound(ClientNotFoundException cnfe){
 
-        problemDetail.setType(URI.create(""));
-        problemDetail.setTitle("Usuário não encontrado");
-        problemDetail.setProperty("timestamp" , Instant.now());
-
-        return problemDetail;
+        return builderProblemDetail(
+                "Usuário não encontrado"
+                ,HttpStatus.NOT_FOUND
+                , cnfe.getMessage()
+        );
     }
 
 }
